@@ -13,3 +13,4 @@ class GameStats():
         """Inicjalizacja danych statystycznych, które mogą zmienic się w trakcie gry"""
 
         self.ships_left = self.settings.ship_limit
+        self.score = 0
