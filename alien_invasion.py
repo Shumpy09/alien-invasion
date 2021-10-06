@@ -142,6 +142,10 @@ class AlienInvasion():
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True) #True1-pocisk, True2-obcy
 
+        if collisions:
+            self.stats.score += self.settings.alien_points
+            self.sb.prep_score()
+
         if not self.aliens:
             # Pozbycie się istniejących pocisków i utworzenie nowej floty
             self.bullets.empty()
