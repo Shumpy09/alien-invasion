@@ -23,6 +23,8 @@ class Settings():
 
         # Łatwa zmiana szybkości gry
         self.speedup_scale = 1.1
+        # Łatwa zmiana liczby punktów przyznawanych za zetrzelenie obcego
+        self.score_scale = 1.5
 
         self.initialize_dynamic_settings()
 
@@ -39,7 +41,9 @@ class Settings():
         self.alien_points = 50
 
     def increase_speed(self):
-        """Zmiana ustawień dotyczących szybkości"""
+        """Zmiana ustawień dotyczących szybkości gry i liczby przyznawanych punktów"""
         self.ship_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
         self.alien_speed *= self.speedup_scale
+
+        self.alien_points = int(self.alien_points * self.score_scale)

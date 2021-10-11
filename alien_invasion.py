@@ -84,6 +84,9 @@ class AlienInvasion():
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.stats.game_active = True
+            self.sb.prep_score()
+            self.sb.prep_level()
+            self.sb.prep_ships()
 
             # Usunięcie zawartości list aliens i bullets
             self.aliens.empty()
@@ -143,14 +146,20 @@ class AlienInvasion():
             self.bullets, self.aliens, True, True) #True1-pocisk, True2-obcy
 
         if collisions:
-            self.stats.score += self.settings.alien_points
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
+            self.sb.check_high_score()
 
         if not self.aliens:
             # Pozbycie się istniejących pocisków i utworzenie nowej floty
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
+
+            # Inkrementacja numer poziomu
+            self.stats.level += 1
+            self.sb.prep_level()
 
     def _update_aliens(self):
         """
@@ -215,7 +224,9 @@ class AlienInvasion():
         if self.stats.ships_left > 0:
 
             # Zmniejszenie wartości przechowywanej w ship_left
+            # i uaktualnienei tablicy wyników
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             # Usunięcie zawartości list aliens i bullets
             self.aliens.empty()
